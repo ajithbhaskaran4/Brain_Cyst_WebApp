@@ -1,2 +1,4 @@
-# Stock_Bot
-Python Based Signal processing Algorithm to do automatic trading
+
+infic o real Bot
+
+for Technological news
