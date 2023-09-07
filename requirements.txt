@@ -113,7 +113,7 @@ pytz==2023.3
 pytz-deprecation-shim==0.1.0.post0
 pyvista==0.41.1
 pyviz-comms==3.0.0
-pywin32==306
+pywin32
 pywinpty==2.0.11
 pyyaml==6.0.1
 pyzmq==25.1.1
