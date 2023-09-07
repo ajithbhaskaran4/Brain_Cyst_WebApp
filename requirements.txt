@@ -1,4 +1,4 @@
-name: Brain_Cyst
+name: Barin_Cyst
 channels:
   - defaults
 dependencies:
