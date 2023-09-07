@@ -2,9 +2,9 @@ import numpy as np
 import os
 from PIL import Image
 import pyvista as pv
-pv.set_jupyter_backend('static')
 import natsort 
 import matplotlib.pyplot as plt
+pv.set_jupyter_backend('static')
 
 
 
