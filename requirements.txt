@@ -6,3 +6,4 @@ pyvista
 pillow
 natsort
 matplotlib
+static

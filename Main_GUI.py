@@ -1,7 +1,8 @@
 import streamlit as st
 from BackEnd.Image2PointCloud import Image2PointCloud
-from stpyvista import stpyvista
 import pyvista as pv
+pv.set_jupyter_backend('static')
+from stpyvista import stpyvista
 import  streamlit_vertical_slider  as svs
 from PIL import Image
 import numpy as np
