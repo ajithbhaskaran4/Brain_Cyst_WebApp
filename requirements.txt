@@ -4,3 +4,5 @@ numpy
 stpyvista
 pyvista
 pillow
+natsort
+matplotlib
