@@ -1,4 +1,2 @@
 
-infic o real Bot
-
-for Technological news
+Brain cyst Analysis Web app using Deep Learning
