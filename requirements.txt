@@ -1,8 +1,9 @@
 streamlit
 pandas
 numpy
-stpyvista
+vtk
 pyvista
+stpyvista
 pillow
 natsort
 matplotlib
