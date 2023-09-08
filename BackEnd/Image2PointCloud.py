@@ -21,7 +21,7 @@ class Image2PointCloud:
     def setPaths(self, path):
         self.directory = path
         
-    def getMRIImage(Image_Number):
+    def getMRIImage(self, Image_Number):
         return self.images[Image_Number,:,:,:]
         
     def read_mri_images(self):
