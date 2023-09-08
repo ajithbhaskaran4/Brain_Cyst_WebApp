@@ -34,6 +34,9 @@ pv.global_theme.show_scalar_bar = False
 
 if 'flag' not in st.session_state:
     st.session_state.flag = False
+
+if 'sliderPos' not in st.session_state:
+    st.session_state.sliderPos = 0
     
 if 'backend' not in st.session_state:
     st.session_state.backend = Image2PointCloud()
@@ -79,7 +82,7 @@ if st.button('Submit'):
 
 
 if st.session_state.flag == True:
-    sliderVal = st.slider("Select MRI Image Slice", min_value=0, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")#,on_change=change_MRI)    
-    currentImage = Image.fromarray(np.uint8(st.session_state.backend.getMRIImage(sliderVal)), mode = "RGB")
+    st.session_state.sliderPos = st.slider("Select MRI Image Slice", min_value=0, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")#,on_change=change_MRI)    
+    currentImage = Image.fromarray(np.uint8(st.session_state.backend.getMRIImage(st.session_state.sliderPos)), mode = "RGB")
     st.image(currentImage)
             
