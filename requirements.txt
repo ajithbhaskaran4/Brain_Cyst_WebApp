@@ -166,4 +166,3 @@ yarl==1.9.2
 zipp==3.16.2
 ipywidgets
 pythreejs
-click<=8.0.4

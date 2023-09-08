@@ -7,6 +7,9 @@ from PIL import Image
 import numpy as np
 import tempfile
 import os
+import io
+from ipywidgets import embed
+from pyvista.jupyter.pv_pythreejs import convert_plotter
 
 pv.start_xvfb()
 
