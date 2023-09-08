@@ -8,9 +8,22 @@ import numpy as np
 import tempfile
 import os
 
+pv.start_xvfb()
+
+pv.set_plot_theme('document')
+
 pv.set_jupyter_backend('static')
 
 st.set_page_config(layout="wide")
+
+def pyvista_streamlit(plotter):
+    widget = convert_plotter(plotter)
+    state = embed.dependency_state(widget)
+    fp = io.StringIO()
+    embed.embed_minimal_html(fp, None, title="", state=state)
+    fp.seek(0)
+    snippet = fp.read()
+    components.html(snippet, width=900, height=500)
 
 # ipythreejs does not support scalar bars :(
 pv.global_theme.show_scalar_bar = False
@@ -72,5 +85,7 @@ if st.session_state.flag == True:
         plotter.add_scalar_bar()
         plotter.view_isometric()
         plotter.background_color = 'white'
-        stpyvista(plotter, key="MRI")
+        #stpyvista(plotter, key="MRI")
+        pyvista_streamlit(plotter)
+        
             
