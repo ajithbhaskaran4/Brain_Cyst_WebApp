@@ -9,6 +9,7 @@ import tempfile
 import os
 import io
 from ipywidgets import embed
+import streamlit.components.v1 as components
 from pyvista.jupyter.pv_pythreejs import convert_plotter
 
 pv.start_xvfb()
