@@ -126,7 +126,7 @@ maxUploadSize = 200
 # connection.
 
 # Default: 200
-maxMessageSize = 1000
+maxMessageSize = 200
 
 # Enables support for websocket compression.
 

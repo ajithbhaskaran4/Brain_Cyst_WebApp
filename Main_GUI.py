@@ -40,14 +40,14 @@ if 'backend' not in st.session_state:
 st.title("MRI CYST ANALYSIS")
 st.text("An Application to view and quantify the presence of cyst from MRI")
 
+
 def change_MRI():
-    with MRICol:
-        st.subheader("MRI Image")
-        currentImage = st.session_state.ImageStack[st.session_state.MRI_Slider, :,:,:]
-        print("current Image size: ", currentImage.shape)
-        currentImage = Image.fromarray(np.uint8(currentImage), mode = "RGB")
-        st.image(currentImage)
-               
+    #st.subheader("MRI Image")
+    currentImage = st.session_state.ImageStack[st.session_state.MRI_Slider, :,:,:]
+    #print("current Image size: ", currentImage.shape)
+    currentImage = Image.fromarray(np.uint8(currentImage), mode = "RGB")
+    st.image(currentImage)
+            
 uploaded_files  = st.file_uploader("Choose the MRI Images", accept_multiple_files=True, key = 'Folder_Path')
 
 if uploaded_files:
@@ -79,7 +79,8 @@ if st.button('Submit'):
 
 
 if st.session_state.flag == True:
-
+    st.slider("Select MRI Image Slice", min_value=0, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider",on_change=change_MRI)
+'''
     pointCol, intermediate, MRICol = st.columns([3, 1,3])
     with pointCol:
         st.subheader("3D MRI View")
@@ -91,5 +92,5 @@ if st.session_state.flag == True:
         plotter.background_color = 'white'
         #stpyvista(plotter, key="MRI")
         pyvista_streamlit(plotter)
-        
+'''        
             
