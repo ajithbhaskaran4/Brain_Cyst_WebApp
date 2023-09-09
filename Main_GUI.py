@@ -95,9 +95,9 @@ if st.button('Submit'):
 if st.session_state.flag == True:
     st.session_state.sliderPos = st.slider("Select MRI Image Slice", min_value=0, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")
     temp_dir = tempfile.mkdtemp()
-    st.session_state.pointCloud.save(os.path.join(temp_dir, "pointCloud.ply"))
-    with open(os.path.join(temp_dir, "pointCloud.ply"), 'rb') as file:
-        st.download_button(label="Download MRI 3D structure", data=file, file_name='MRI_3D.ply')
+    st.session_state.pointCloud.save(os.path.join(temp_dir, "pointCloud.stl"))
+    with open(os.path.join(temp_dir, "pointCloud.stl"), 'rb') as file:
+        st.download_button(label="Download MRI 3D structure", data=file, file_name='MRI_3D.stl')
     mri_image, MRI_Cyst = st.columns([1,1])
     with mri_image:
         currentImage = Image.fromarray(np.uint8(st.session_state.backend.getMRIImage(st.session_state.sliderPos)), mode = "RGB")
