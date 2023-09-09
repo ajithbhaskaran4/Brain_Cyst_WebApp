@@ -76,7 +76,7 @@ if uploaded_files:
 
 if st.button('Submit'):
     st.session_state.backend.read_mri_images()
-    st.session_state.pointCloud = backend.convert2PointCloud()
+    st.session_state.pointCloud = st.session_state.backend.convert2PointCloud()
     #st.session_state.NumImages = backend.getnumberofImages()
     #st.session_state.ImageStack = backend.get_StackMRI()
     #if 'pointCloud' not in st.session_state:
