@@ -98,7 +98,7 @@ if st.session_state.flag == True:
     st.session_state.pointCloud.save(os.path.join(temp_dir, "pointCloud.ply"))
     with open(os.path.join(temp_dir, "pointCloud.ply"), 'rb') as file:
         st.download_button(label="Download MRI 3D structure", data=file, file_name='MRI_3D.ply')
-    mri_image, MRI_Cyst = st.columns()
+    mri_image, MRI_Cyst = st.columns([1,1])
     with mri_image:
         currentImage = Image.fromarray(np.uint8(st.session_state.backend.getMRIImage(st.session_state.sliderPos)), mode = "RGB")
         st.image(currentImage)
