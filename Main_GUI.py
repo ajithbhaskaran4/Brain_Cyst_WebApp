@@ -74,7 +74,7 @@ if st.button('Submit'):
 
 
 if st.session_state.flag == True:
-    sliderVal = st.slider("Select MRI Image Slice", min_value=0, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")#,on_change=change_MRI)    
+    st.session_state.sliderPos = st.slider("Select MRI Image Slice", min_value=0, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")#,on_change=change_MRI)    
     currentImage = Image.fromarray(np.uint8(st.session_state.backend.getMRIImage(st.session_state.sliderPos)), mode = "RGB")
     st.image(currentImage)
             
