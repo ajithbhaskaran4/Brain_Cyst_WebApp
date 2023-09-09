@@ -93,12 +93,21 @@ if st.button('Submit'):
     print("received all data")
     st.session_state.flag = True
 
-
+st.download_button(
+    label="Download data as CSV",
+    data=csv,
+    file_name='large_df.csv',
+    mime='text/csv',
+)
 
 if st.session_state.flag == True:
-    st.session_state.sliderPos = st.slider("Select MRI Image Slice", min_value=0, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")#,on_change=change_MRI)    
-    currentImage = Image.fromarray(np.uint8(st.session_state.backend.getMRIImage(st.session_state.sliderPos)), mode = "RGB")
-    st.image(currentImage)
-    currentPred = Image.fromarray(st.session_state.prediction[st.session_state.sliderPos,:,:,0], mode = 'L')
-    st.image(currentPred)
+    st.session_state.sliderPos = st.slider("Select MRI Image Slice", min_value=0, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")
+    st.download_button(label="Download MRI 3D structure", data=st.session_state.pointCloud, file_name='MRI_3D.vtk')
+    mri_image, MRI_Cyst = st.columns()
+    with mri_image:
+        currentImage = Image.fromarray(np.uint8(st.session_state.backend.getMRIImage(st.session_state.sliderPos)), mode = "RGB")
+        st.image(currentImage)
+    with MRI_Cyst:
+        currentPred = Image.fromarray(st.session_state.prediction[st.session_state.sliderPos,:,:,0], mode = 'L')
+        st.image(currentPred)
             
