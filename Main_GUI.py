@@ -15,11 +15,11 @@ pv.set_jupyter_backend('static')
 
 st.set_page_config(layout="wide")
 
-@st.cache
+@st.cache_resource
 def getBrainImage():
     return Image.open(r"BackEnd/Brain_Image.jpeg")
     
-@st.cache    
+@st.cache_resource    
 def getBrainGIF():
     file = open(r"BackEnd/Brain_GIF.gif", 'rb')
     contents = file.read()
