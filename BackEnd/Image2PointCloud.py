@@ -99,7 +99,7 @@ class CNN_Prediction():
     def predictCNN(self, Input):
         Input = Input.astype('float32')
         Input = (Input - self.mean) / self.std
-        Pred = model.predict(Input)
+        Pred = self.Model.predict(Input)
         Pred = (Pred > 0.5).astype('uint8')
         return Pred
     
