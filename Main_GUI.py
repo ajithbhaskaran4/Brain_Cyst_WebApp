@@ -27,7 +27,7 @@ def getBrainGIF():
     file.close()
     return data_url
     
-@st.cahe_data
+@st.cache_data
 def getPointCloud():
     with open(os.path.join(temp_dir, "pointCloud.vtk"), 'rb') as file:
         return file
