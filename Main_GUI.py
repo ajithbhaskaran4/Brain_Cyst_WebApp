@@ -93,13 +93,6 @@ if st.button('Submit'):
     print("received all data")
     st.session_state.flag = True
 
-st.download_button(
-    label="Download data as CSV",
-    data=csv,
-    file_name='large_df.csv',
-    mime='text/csv',
-)
-
 if st.session_state.flag == True:
     st.session_state.sliderPos = st.slider("Select MRI Image Slice", min_value=0, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")
     st.download_button(label="Download MRI 3D structure", data=st.session_state.pointCloud, file_name='MRI_3D.vtk')
