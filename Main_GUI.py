@@ -6,6 +6,7 @@ import  streamlit_vertical_slider  as svs
 from PIL import Image
 import numpy as np
 import tempfile
+import base64
 import os
 import io
 
