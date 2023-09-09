@@ -76,12 +76,12 @@ if uploaded_files:
 
 if st.button('Submit'):
     st.session_state.backend.read_mri_images()
-    st.session_state.pointCloud = st.session_state.backend.convert2PointCloud()
+    #st.session_state.pointCloud = st.session_state.backend.convert2PointCloud()
     #st.session_state.NumImages = backend.getnumberofImages()
     #st.session_state.ImageStack = backend.get_StackMRI()
+    
     #if 'pointCloud' not in st.session_state:
     st.session_state.pointCloud = st.session_state.backend.convert2PointCloud()
-    
     #if 'NumImages' not in st.session_state:
     st.session_state.NumImages = st.session_state.backend.getnumberofImages()
     #if 'ImageStack' not in st.session_state:
@@ -94,7 +94,7 @@ if st.button('Submit'):
 
 if st.session_state.flag == True:
     st.session_state.sliderPos = st.slider("Select MRI Image Slice", min_value=1, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")
-    temp_dir = tempfile.mkdtemp()
+    #temp_dir = tempfile.mkdtemp()
     st.session_state.pointCloud.save(os.path.join(temp_dir, "pointCloud.stl"))
     if os.path.exists(os.path.join(temp_dir, "pointCloud.stl")):
         st.write("File Exist")
