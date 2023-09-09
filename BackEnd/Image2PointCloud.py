@@ -91,8 +91,8 @@ class Image2PointCloud:
         
 class CNN_Prediction():
     def __init__(self):
-        self.ModelPath = 'BackEnd/Unet_Best_Model.hdf5'
-        self.Model = keras.models.load_model(r'/content/drive/My Drive/CYST_SEGMENTATION/MODEL/Unet_Best_Model.hdf5',custom_objects={"dice_coef": dice_coef,"dice_loss": dice_loss })
+        self.ModelPath = r'BackEnd/Unet_Best_Model.hdf5'
+        self.Model = keras.models.load_model(self.ModelPath,custom_objects={"dice_coef": dice_coef,"dice_loss": dice_loss })
         self.mean = 21.77118
         self.std = 32.471928
         
