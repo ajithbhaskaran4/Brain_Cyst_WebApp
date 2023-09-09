@@ -8,26 +8,12 @@ import numpy as np
 import tempfile
 import os
 import io
-from ipywidgets import embed
-import streamlit.components.v1 as components
-from pyvista.jupyter.pv_pythreejs import convert_plotter
 
-pv.start_xvfb()
-
-pv.set_plot_theme('document')
 
 pv.set_jupyter_backend('static')
 
 st.set_page_config(layout="wide")
 
-def pyvista_streamlit(plotter):
-    widget = convert_plotter(plotter)
-    state = embed.dependency_state(widget)
-    fp = io.StringIO()
-    embed.embed_minimal_html(fp, None, title="", state=state)
-    fp.seek(0)
-    snippet = fp.read()
-    components.html(snippet, width=900, height=500)
 
 # ipythreejs does not support scalar bars :(
 pv.global_theme.show_scalar_bar = False
