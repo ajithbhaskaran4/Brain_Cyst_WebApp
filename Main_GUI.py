@@ -42,7 +42,7 @@ if 'sliderPos' not in st.session_state:
 if 'backend' not in st.session_state:
     st.session_state.backend = Image2PointCloud()
 
-BrainImage, BrainGIF = st.coloumn([3,1])
+BrainImage, BrainGIF = st.columns([3,1])
 
 with BrainImage:
     st.image(getBrainImage())
