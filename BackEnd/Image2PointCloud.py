@@ -101,5 +101,6 @@ class CNN_Prediction():
         Input = (Input - self.mean) / self.std
         Pred = self.Model.predict(Input)
         Pred = (Pred > 0.5).astype('uint8')
+        Pred = Pred*255
         return Pred
     
