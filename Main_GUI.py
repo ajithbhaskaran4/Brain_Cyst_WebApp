@@ -26,13 +26,6 @@ def getBrainGIF():
     data_url = base64.b64encode(contents).decode('utf-8-sig')
     file.close()
     return data_url
-    
-@st.cache_data
-def getPointCloud():
-    with open(os.path.join(temp_dir, "pointCloud.vtk"), 'rb') as file:
-        return file
-    
-
 
 # ipythreejs does not support scalar bars :(
 pv.global_theme.show_scalar_bar = False
@@ -102,7 +95,8 @@ if st.button('Submit'):
 
 if st.session_state.flag == True:
     st.session_state.sliderPos = st.slider("Select MRI Image Slice", min_value=0, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")
-    st.download_button(label="Download MRI 3D structure", data=getPointCloud(), file_name='MRI_3D.vtk')
+    with open(os.path.join(temp_dir, "pointCloud.vtk"), 'rb') as file:
+        st.download_button(label="Download MRI 3D structure", data=file, file_name='MRI_3D.vtk')
     mri_image, MRI_Cyst = st.columns()
     with mri_image:
         currentImage = Image.fromarray(np.uint8(st.session_state.backend.getMRIImage(st.session_state.sliderPos)), mode = "RGB")
