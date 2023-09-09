@@ -26,6 +26,12 @@ def getBrainGIF():
     data_url = base64.b64encode(contents).decode('utf-8-sig')
     file.close()
     return data_url
+    
+@st.cahe_data
+def getPointCloud():
+    with open(os.path.join(temp_dir, "pointCloud.vtk"), 'rb') as file:
+        return file
+    
 
 
 # ipythreejs does not support scalar bars :(
@@ -43,9 +49,8 @@ if 'sliderPos' not in st.session_state:
 if 'backend' not in st.session_state:
     st.session_state.backend = Image2PointCloud()
 
-BrainImage, BrainGIF = st.columns([3,1])
-
 st.title("MRI CYST ANALYSIS")
+BrainImage, BrainGIF = st.columns([3,1])
 with BrainImage:
     st.image(getBrainImage())
 
@@ -81,21 +86,23 @@ if st.button('Submit'):
     #st.session_state.pointCloud = backend.convert2PointCloud()
     #st.session_state.NumImages = backend.getnumberofImages()
     #st.session_state.ImageStack = backend.get_StackMRI()
-    if 'pointCloud' not in st.session_state:
-        st.session_state.pointCloud = st.session_state.backend.convert2PointCloud()
-    if 'NumImages' not in st.session_state:
-        st.session_state.NumImages = st.session_state.backend.getnumberofImages()
-    if 'ImageStack' not in st.session_state:
-        st.session_state.ImageStack = st.session_state.backend.get_StackMRI() 
-    if 'prediction' not in st.session_state:
-        st.session_state.prediction = st.session_state.CNN.predictCNN(st.session_state.ImageStack)
+    #if 'pointCloud' not in st.session_state:
+    st.session_state.pointCloud = st.session_state.backend.convert2PointCloud()
+    st.session_state.pointCloud.save(os.path.join(temp_dir, "pointCloud.vtk"))
+    
+    #if 'NumImages' not in st.session_state:
+    st.session_state.NumImages = st.session_state.backend.getnumberofImages()
+    #if 'ImageStack' not in st.session_state:
+    st.session_state.ImageStack = st.session_state.backend.get_StackMRI() 
+    #if 'prediction' not in st.session_state:
+    st.session_state.prediction = st.session_state.CNN.predictCNN(st.session_state.ImageStack)
        
     print("received all data")
     st.session_state.flag = True
 
 if st.session_state.flag == True:
     st.session_state.sliderPos = st.slider("Select MRI Image Slice", min_value=0, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")
-    st.download_button(label="Download MRI 3D structure", data=st.session_state.pointCloud, file_name='MRI_3D.vtk')
+    st.download_button(label="Download MRI 3D structure", data=getPointCloud(), file_name='MRI_3D.vtk')
     mri_image, MRI_Cyst = st.columns()
     with mri_image:
         currentImage = Image.fromarray(np.uint8(st.session_state.backend.getMRIImage(st.session_state.sliderPos)), mode = "RGB")
