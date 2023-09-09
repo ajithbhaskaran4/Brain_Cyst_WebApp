@@ -14,6 +14,18 @@ pv.set_jupyter_backend('static')
 
 st.set_page_config(layout="wide")
 
+@st.cache
+def getBrainImage():
+    return Image.open(r"BackEnd/Brain_Image.jpeg")
+    
+@st.cache    
+def getBrainGIF():
+    file = open(r"BackEnd/Brain_GIF.gif", 'rb')
+    contents = file.read()
+    data_url = base64.b64encode(contents).decode('utf-8-sig')
+    file.close()
+    return data_url
+
 
 # ipythreejs does not support scalar bars :(
 pv.global_theme.show_scalar_bar = False
@@ -29,6 +41,14 @@ if 'sliderPos' not in st.session_state:
     
 if 'backend' not in st.session_state:
     st.session_state.backend = Image2PointCloud()
+
+BrainImage, BrainGIF = st.coloumn([3,1])
+
+with BrainImage:
+    st.image(getBrainImage())
+
+with BrainGIF:
+    st.markdown(f'<img src="data:image/gif;base64,{getBrainGIF()}>',unsafe_allow_html = True)
 st.title("MRI CYST ANALYSIS")
 st.text("An Application to view and quantify the presence of cyst from MRI")
 
@@ -77,7 +97,6 @@ if st.session_state.flag == True:
     st.session_state.sliderPos = st.slider("Select MRI Image Slice", min_value=0, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")#,on_change=change_MRI)    
     currentImage = Image.fromarray(np.uint8(st.session_state.backend.getMRIImage(st.session_state.sliderPos)), mode = "RGB")
     st.image(currentImage)
-    st.write(st.session_state.prediction[st.session_state.sliderPos,:,:,0].shape)
     currentPred = Image.fromarray(st.session_state.prediction[st.session_state.sliderPos,:,:,0], mode = 'L')
     st.image(currentPred)
             
