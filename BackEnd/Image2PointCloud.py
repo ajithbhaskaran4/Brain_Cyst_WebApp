@@ -4,11 +4,27 @@ from PIL import Image
 import pyvista as pv
 import natsort 
 import matplotlib.pyplot as plt
+
+import keras
+import numpy as np
+import os
+from keras import backend as K
+
 pv.set_jupyter_backend('static')
 
 
 
 cmap = plt.get_cmap('viridis')
+
+def dice_coef(y_true, y_pred, smooth=100):
+    y_true_f = K.flatten(y_true)
+    y_pred_f = K.flatten(y_pred)
+    intersection = K.sum(y_true_f * y_pred_f)
+    dice = (2. * intersection + smooth) / (K.sum(y_true_f) + K.sum(y_pred_f) + smooth)
+    return dice
+
+def dice_loss(y_true, y_pred):
+    return 1-dice_coef(y_true, y_pred)
 
 
 class Image2PointCloud:
@@ -72,4 +88,18 @@ class Image2PointCloud:
     def get_StackMRI(self):
         print("Image stack Size: ", self.images.shape)
         return self.images
+        
+class CNN_Prediction():
+    def __init__(self):
+        self.ModelPath = 'BackEnd/Unet_Best_Model.hdf5'
+        self.Model = keras.models.load_model(r'/content/drive/My Drive/CYST_SEGMENTATION/MODEL/Unet_Best_Model.hdf5',custom_objects={"dice_coef": dice_coef,"dice_loss": dice_loss })
+        self.mean = 21.77118
+        self.std = 32.471928
+        
+    def predictCNN(self, Input):
+        Input = Input.astype('float32')
+        Input = (Input - self.mean) / self.std
+        Pred = model.predict(Input)
+        Pred = (Pred > 0.5).astype('uint8')
+        return Pred
     

@@ -1,5 +1,5 @@
 import streamlit as st
-from BackEnd.Image2PointCloud import Image2PointCloud
+from BackEnd.Image2PointCloud import Image2PointCloud, CNN_Prediction
 from stpyvista import stpyvista
 import pyvista as pv
 import  streamlit_vertical_slider  as svs
@@ -34,6 +34,9 @@ pv.global_theme.show_scalar_bar = False
 
 if 'flag' not in st.session_state:
     st.session_state.flag = False
+    
+if 'CNN' not in st.session_state:
+    st.session_state.CNN = CNN_Prediction()
 
 if 'sliderPos' not in st.session_state:
     st.session_state.sliderPos = 0
@@ -75,14 +78,17 @@ if st.button('Submit'):
     if 'NumImages' not in st.session_state:
         st.session_state.NumImages = st.session_state.backend.getnumberofImages()
     if 'ImageStack' not in st.session_state:
-        st.session_state.ImageStack = st.session_state.backend.get_StackMRI()
+        st.session_state.ImageStack = st.session_state.backend.get_StackMRI() 
+    if 'prediction' not in st.session_state:
+        st.session_state.prediction = st.session_state.CNN.predictCNN(st.session_state.ImageStack)
+       
     print("received all data")
     st.session_state.flag = True
 
 
 
 if st.session_state.flag == True:
-    st.session_state.sliderPos = st.slider("Select MRI Image Slice", min_value=0, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")#,on_change=change_MRI)    
+    sliderVal = st.slider("Select MRI Image Slice", min_value=0, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")#,on_change=change_MRI)    
     currentImage = Image.fromarray(np.uint8(st.session_state.backend.getMRIImage(st.session_state.sliderPos)), mode = "RGB")
     st.image(currentImage)
             
