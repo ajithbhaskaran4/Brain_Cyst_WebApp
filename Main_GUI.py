@@ -50,7 +50,7 @@ with BrainImage:
 
 with BrainGIF:
     data_url = getBrainGIF()
-    st.markdown(f'<img src="data:image/gif;base64,{data_url}>',unsafe_allow_html = True)
+    st.markdown(f'<img src="data:image/gif;base64,{data_url}">',unsafe_allow_html = True)
 st.title("MRI CYST ANALYSIS")
 st.text("An Application to view and quantify the presence of cyst from MRI")
 
