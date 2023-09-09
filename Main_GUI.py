@@ -81,7 +81,6 @@ if st.button('Submit'):
     #st.session_state.ImageStack = backend.get_StackMRI()
     #if 'pointCloud' not in st.session_state:
     st.session_state.pointCloud = st.session_state.backend.convert2PointCloud()
-    st.session_state.pointCloud.save(os.path.join(temp_dir, "pointCloud.vtk"))
     
     #if 'NumImages' not in st.session_state:
     st.session_state.NumImages = st.session_state.backend.getnumberofImages()
@@ -95,6 +94,8 @@ if st.button('Submit'):
 
 if st.session_state.flag == True:
     st.session_state.sliderPos = st.slider("Select MRI Image Slice", min_value=0, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")
+    temp_dir = tempfile.mkdtemp()
+    st.session_state.pointCloud.save(os.path.join(temp_dir, "pointCloud.vtk"))
     with open(os.path.join(temp_dir, "pointCloud.vtk"), 'rb') as file:
         st.download_button(label="Download MRI 3D structure", data=file, file_name='MRI_3D.vtk')
     mri_image, MRI_Cyst = st.columns()
