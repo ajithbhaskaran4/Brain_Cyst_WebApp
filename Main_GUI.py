@@ -95,7 +95,7 @@ if st.button('Submit'):
 if st.session_state.flag == True:
     st.session_state.sliderPos = st.slider("Select MRI Image Slice", min_value=1, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")
     #temp_dir = tempfile.mkdtemp()
-    st.session_state.pointCloud.reconstruct_surface().save(os.path.join(temp_dir, "pointCloud.stl"))
+    st.session_state.pointCloud.delaunay_3d(alpha=2.).save(os.path.join(temp_dir, "pointCloud.stl"))
     print("Meshing completed")
     if os.path.exists(os.path.join(temp_dir, "pointCloud.stl")):
         st.write("File Exist")
