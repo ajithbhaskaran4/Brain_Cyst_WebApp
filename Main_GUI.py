@@ -26,6 +26,14 @@ def getBrainGIF():
     data_url = base64.b64encode(contents).decode('utf-8-sig')
     file.close()
     return data_url
+    
+def prevButton():
+    if not (st.session_state.sliderPos ==0):
+        st.session_state.sliderPos = st.session_state.sliderPos -1
+        
+def nextButton():
+    if not (st.session_state.sliderPos >= st.session_state.NumImages):
+        st.session_state.sliderPos = st.session_state.sliderPos +1
 
 # ipythreejs does not support scalar bars :(
 pv.global_theme.show_scalar_bar = False
@@ -93,7 +101,15 @@ if st.button('Submit'):
     st.session_state.flag = True
 
 if st.session_state.flag == True:
-    st.session_state.sliderPos = st.slider("Select MRI Image Slice", min_value=1, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")
+    prev, label, Next = st.coloums([1,2,1])
+    with prev:
+        st.button("Previous", on_click = prevButton)
+    with Next:
+        st.button("Next", on_click = nextButton)
+    with label : 
+        string = "MRI Image Number :" + str(st.session_state.sliderPos)
+        st.write(string)
+    #st.session_state.sliderPos = st.slider("Select MRI Image Slice", min_value=1, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")
     mri_image, MRI_Cyst = st.columns([1,1])
     with mri_image:
         currentImage = Image.fromarray(np.uint8(st.session_state.backend.getMRIImage(st.session_state.sliderPos-1)), mode = "RGB")

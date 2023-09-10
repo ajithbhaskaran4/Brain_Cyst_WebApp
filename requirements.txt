@@ -16,3 +16,4 @@ trame
 vtk
 ipywidgets
 pythreejs
+streamlit-extras
