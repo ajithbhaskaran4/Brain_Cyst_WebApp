@@ -13,7 +13,7 @@ import io
 
 pv.set_jupyter_backend('static')
 
-#st.set_page_config(layout="wide")
+st.set_page_config(layout="wide")
 
 @st.cache_resource
 def getBrainImage():
