@@ -101,7 +101,7 @@ if st.button('Submit'):
     st.session_state.flag = True
 
 if st.session_state.flag == True:
-    prev, label, Next = st.coloums([1,2,1])
+    prev, label, Next = st.columns([1,2,1])
     with prev:
         st.button("Previous", on_click = prevButton)
     with Next:
