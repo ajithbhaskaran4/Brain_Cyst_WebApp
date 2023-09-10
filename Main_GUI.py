@@ -28,7 +28,7 @@ def getBrainGIF():
     return data_url
     
 def prevButton():
-    if not (st.session_state.sliderPos ==0):
+    if not (st.session_state.sliderPos == 1):
         st.session_state.sliderPos = st.session_state.sliderPos -1
         
 def nextButton():
@@ -45,7 +45,7 @@ if 'CNN' not in st.session_state:
     st.session_state.CNN = CNN_Prediction()
 
 if 'sliderPos' not in st.session_state:
-    st.session_state.sliderPos = 0
+    st.session_state.sliderPos = 1
     
 if 'backend' not in st.session_state:
     st.session_state.backend = Image2PointCloud()
@@ -101,6 +101,7 @@ if st.button('Submit'):
     st.session_state.flag = True
 
 if st.session_state.flag == True:
+    ReportString = str(st.session_state.NumImages) + " MRI Images are Uploaded and processed"
     prev, label, Next = st.columns([1,2,1])
     with prev:
         st.button("Previous", on_click = prevButton)
@@ -112,9 +113,12 @@ if st.session_state.flag == True:
     #st.session_state.sliderPos = st.slider("Select MRI Image Slice", min_value=1, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")
     mri_image, MRI_Cyst = st.columns([1,1])
     with mri_image:
+        st.write("Original MRI Image")
         currentImage = Image.fromarray(np.uint8(st.session_state.backend.getMRIImage(st.session_state.sliderPos-1)), mode = "RGB")
         st.image(currentImage)
     with MRI_Cyst:
+        st.write("Processed MRI Image")
+        st.write("** red region Indicates the presence of cyst")
         mriImage = np.uint8(st.session_state.backend.getMRIImage(st.session_state.sliderPos-1))
         cystPos = np.where(st.session_state.prediction[st.session_state.sliderPos-1,:,:,0]==255)
         RLayer = mriImage[:,:,0]
