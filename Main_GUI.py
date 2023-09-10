@@ -107,7 +107,7 @@ if st.session_state.flag == True:
     with Next:
         st.button("Next", on_click = nextButton)
     with label : 
-        string = "MRI Image Number :" + str(st.session_state.sliderPos)
+        string = "       MRI Image Number :" + str(st.session_state.sliderPos)
         st.write(string)
     #st.session_state.sliderPos = st.slider("Select MRI Image Slice", min_value=1, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider")
     mri_image, MRI_Cyst = st.columns([1,1])
