@@ -117,8 +117,7 @@ if st.session_state.flag == True:
         currentImage = Image.fromarray(np.uint8(st.session_state.backend.getMRIImage(st.session_state.sliderPos-1)), mode = "RGB")
         st.image(currentImage)
     with MRI_Cyst:
-        st.write("Processed MRI Image")
-        st.write("** red region Indicates the presence of cyst")
+        st.write("Processed MRI Image. ** red region Indicates the presence of cyst")
         mriImage = np.uint8(st.session_state.backend.getMRIImage(st.session_state.sliderPos-1))
         cystPos = np.where(st.session_state.prediction[st.session_state.sliderPos-1,:,:,0]==255)
         RLayer = mriImage[:,:,0]
