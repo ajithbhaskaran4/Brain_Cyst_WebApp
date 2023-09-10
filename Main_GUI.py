@@ -102,6 +102,7 @@ if st.button('Submit'):
 
 if st.session_state.flag == True:
     ReportString = str(st.session_state.NumImages) + " MRI Images are Uploaded and processed"
+    st.write(ReportString)
     prev, label, Next = st.columns([1,2,1])
     with prev:
         st.button("Previous", on_click = prevButton)
