@@ -102,9 +102,9 @@ class Image2PointCloud:
         print("numpy array: ", points.shape)
         print("numpy colors: ", colors.shape)
         print("numpy transparency: ", transparency.shape)
-        points = np.append(points,predPoint)
-        colors = np.append(colors,predcolors)
-        transparency = np.append(transparency,predtransparency)
+        points = np.append(points,predPoint, axis = 0)
+        colors = np.append(colors,predcolors, axis = 0)
+        transparency = np.append(transparency,predtransparency, axis = 0)
         
         points = np.array(points)
         print("point shape: ", points.shape)
