@@ -10,8 +10,9 @@ import base64
 import os
 import io
 
-
 pv.set_jupyter_backend('static')
+
+pyvista.start_xvfb()
 
 st.set_page_config(layout="wide")
 
