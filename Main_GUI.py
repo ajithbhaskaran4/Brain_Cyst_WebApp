@@ -129,4 +129,15 @@ if st.session_state.flag == True:
         BLayer[cystPos] = 0
         currentPred = Image.fromarray(mriImage, mode = 'RGB')
         st.image(currentPred)
+        
+    pointCol, intermediate, MRICol = st.columns([3, 1,3])
+    with pointCol:
+        st.subheader("3D MRI View")
+        st.slider("Select MRI Image Slice", min_value=0, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider",on_change=change_MRI)
+        plotter = pv.Plotter(window_size=[600,600])
+        plotter.add_points(st.session_state.pointCloud, opacity = st.session_state.pointCloud['transparency'], cmap='bone') #, opacity = pointCloud['transparency']
+        plotter.add_scalar_bar()
+        plotter.view_isometric()
+        plotter.background_color = 'white'
+        stpyvista(plotter, key="MRI")
             

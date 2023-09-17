@@ -1,6 +1,6 @@
 import numpy as np
 import os
-from PIL import Image
+from PIL import Image, ImageFilter
 import pyvista as pv
 import natsort 
 import matplotlib.pyplot as plt
@@ -50,7 +50,13 @@ class Image2PointCloud:
             if not filename.endswith("_mask.tif"): 
                 #print("Image: ", filename)
                 img_path = os.path.join(self.directory, filename)
-                img = np.asarray(Image.open(img_path))  # Read the image in grayscale
+                img = Image.open(img_path)
+                edge = img.convert("L")
+                edge = edge.filter(ImageFilter.FIND_EDGES)
+                edge = np.expand_dims(np.asarray(edge), axis=0)
+                edge = np.expand_dims(edge, axis=-1)
+                self.edges = np.append(self.edges, edge, axis = 0)
+                img = np.asarray(img)  # Read the image in grayscale
                 img = np.expand_dims(img, axis=0)
                 self.images = np.append(self.images, img, axis = 0)
                 
@@ -63,9 +69,9 @@ class Image2PointCloud:
         transparency = []
         scale_factor = 0.1
         
-        points = np.argwhere(self.images[:,:,:,1])
+        points = np.argwhere(self.edges[:,:,:,0]>=20)
         colors = cmap(self.images[points[:, 0], points[:, 1], points[:, 2], :]/255)
-        transparency = self.images[points[:, 0], points[:, 1], points[:, 2], 1]/255
+        transparency = self.edges[points[:, 0], points[:, 1], points[:, 2], 0]/255
         
         points = np.array(points)
         print("point shape: ", points.shape)
