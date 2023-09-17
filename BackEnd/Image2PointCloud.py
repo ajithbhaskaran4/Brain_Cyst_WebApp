@@ -97,7 +97,7 @@ class Image2PointCloud:
         
         predPoint = np.argwhere(self.prediction[:,:,:,0]==1)
         predcolors = cmap(np.ones([predPoint.shape[0],3]))
-        predtransparency = self.prediction[points[:, 0], points[:, 1], points[:, 2], 0]
+        predtransparency = self.prediction[predPoint[:, 0], predPoint[:, 1], predPoint[:, 2], 0]
         
         print("numpy array: ", points.shape)
         print("numpy colors: ", colors.shape)
