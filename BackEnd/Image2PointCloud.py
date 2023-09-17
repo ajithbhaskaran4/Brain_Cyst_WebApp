@@ -43,11 +43,12 @@ class Image2PointCloud:
         
     def read_mri_images(self):
         self.images = np.empty((0, 256, 256, 3))
+        self.edges = np.empty((0, 256, 256, 1))
         directoryList = os.listdir(self.directory)
         #print("Unsorted : ",directoryList)
         directoryList = natsort.natsorted(directoryList,reverse=False)
         #print("Sorted: ", directoryList)
-        for filename in os.listdir(self.directory):
+        for filename in directoryList:
             if not filename.endswith("_mask.tif"): 
                 #print("Image: ", filename)
                 img_path = os.path.join(self.directory, filename)
