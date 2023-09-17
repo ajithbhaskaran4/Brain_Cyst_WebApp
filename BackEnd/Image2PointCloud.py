@@ -31,6 +31,7 @@ class Image2PointCloud:
     def __init__(self):
         self.directory = [] #r'P:\MRI_Cyst\archive\kaggle_3m\TCGA_HT_A61A_20000127'  #TCGA_HT_A61A_20000127 TCGA_HT_8107_19980708
         self.images = np.empty((0, 256, 256, 3))
+        self.edges = np.empty((0, 256, 256, 1))
         self.pointcloud = []
         self.color = []
         
