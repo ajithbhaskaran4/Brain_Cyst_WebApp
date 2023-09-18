@@ -95,7 +95,7 @@ class Image2PointCloud:
         colors = cmap(self.images[points[:, 0], points[:, 1], points[:, 2], :]/255)
         transparency = self.edges[points[:, 0], points[:, 1], points[:, 2], 0]/255
         
-        predPoint = np.argwhere(self.prediction[:,:,:,0]==1)
+        predPoint = np.argwhere(self.prediction[:,:,:,0]==255)
         redColor = np.array([1,0,0])
         redColor = np.expand_dims(redColor, axis=0)
         predcolors = cmap(np.repeat(redColor, predPoint.shape[0], axis = 0))
