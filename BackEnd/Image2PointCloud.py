@@ -106,7 +106,7 @@ class Image2PointCloud:
         
         points = np.argwhere(self.edges[:,:,:,0]>=20)
         colors = cmap(self.images[points[:, 0], points[:, 1], points[:, 2], :]/255)
-        transparency = np.ones(points.shape[0])/2
+        transparency = np.ones(points.shape[0])/4
        
         
         points = np.array(points)
