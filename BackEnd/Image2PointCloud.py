@@ -48,7 +48,7 @@ class CNN_Prediction():
         redColor = np.array([0,1,0])
         redColor = np.expand_dims(redColor, axis=0)
         predcolors = cmap(np.repeat(redColor, predPoint.shape[0], axis = 0))
-        predtransparency = np.ones(predPoint.shape[0])
+        predtransparency = np.zeros(predPoint.shape[0])
         
         self.cycst_cloud = pv.PolyData(predPoint)
         predcolors = np.array(predcolors)
@@ -106,7 +106,7 @@ class Image2PointCloud:
         
         points = np.argwhere(self.edges[:,:,:,0]>=20)
         colors = cmap(self.images[points[:, 0], points[:, 1], points[:, 2], :]/255)
-        transparency = np.ones(points.shape[0])/10
+        transparency = np.ones(points.shape[0])/0.8
        
         
         points = np.array(points)
