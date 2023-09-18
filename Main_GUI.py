@@ -135,7 +135,6 @@ if st.session_state.flag == True:
     pointCol, intermediate, MRICol = st.columns([3, 1,3])
     with pointCol:
         st.subheader("3D MRI View")
-        st.slider("Select MRI Image Slice", min_value=0, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider",on_change=change_MRI)
         plotter = pv.Plotter(window_size=[600,600])
         plotter.add_points(st.session_state.pointCloud, opacity = 0.5, cmap= 'bone') #, opacity = pointCloud['transparency']
         plotter.add_points(st.session_state.cystCloud)
@@ -143,4 +142,13 @@ if st.session_state.flag == True:
         plotter.view_isometric()
         plotter.background_color = 'white'
         stpyvista(plotter, key="MRI")
+        
+    with MRICol:
+        st.subheader("3D Cyst View")
+        plotterCyst = pv.Plotter(window_size=[600,600])
+        plotterCyst.add_points(st.session_state.cystCloud)
+        plotterCyst.add_scalar_bar()
+        plotterCyst.view_isometric()
+        plotterCyst.background_color = 'white'
+        stpyvista(plotterCyst, key="MRI_Cyst")
             
