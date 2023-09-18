@@ -33,14 +33,31 @@ class CNN_Prediction():
         self.Model = keras.models.load_model(self.ModelPath,custom_objects={"dice_coef": dice_coef,"dice_loss": dice_loss })
         self.mean = 21.77118
         self.std = 32.471928
+        self.pred = []
         
     def predictCNN(self, Input):
         Input = Input.astype('float32')
         Input = (Input - self.mean) / self.std
         Pred = self.Model.predict(Input)
         Pred = (Pred > 0.5).astype('uint8')
-        Pred = Pred*255
-        return Pred
+        self.pred = Pred*255
+        return self.pred
+    
+    def getCystPointCloud(self):
+        predPoint = np.argwhere(self.pred[:,:,:,0]==255)
+        redColor = np.array([0,1,0])
+        redColor = np.expand_dims(redColor, axis=0)
+        predcolors = cmap(np.repeat(redColor, predPoint.shape[0], axis = 0))
+        predtransparency = np.ones(predPoint.shape[0])
+        
+        self.cycst_cloud = pv.PolyData(predPoint)
+        predcolors = np.array(predcolors)
+        self.cycst_cloud['point_color'] = predcolors
+        print("Point Cloud transparecy")
+        predtransparency = np.array(predtransparency).astype(float)
+        self.cycst_cloud['transparency'] = predtransparency
+        return self.cycst_cloud
+        
 
 class Image2PointCloud:
     def __init__(self):
@@ -49,7 +66,6 @@ class Image2PointCloud:
         self.edges = np.empty((0, 256, 256, 1))
         self.pointcloud = []
         self.color = []
-        self.CNN_Model = CNN_Prediction()
         
     def setPaths(self, path):
         self.directory = path
@@ -77,13 +93,10 @@ class Image2PointCloud:
                 img = np.asarray(img)  # Read the image in grayscale
                 img = np.expand_dims(img, axis=0)
                 self.images = np.append(self.images, img, axis = 0)
-        self.prediction = self.CNN_Model.predictCNN(self.images)
                 
     def getnumberofImages(self):
         return self.images.shape[0]
         
-    def getPrediction(self):
-        return self.prediction
                 
     def convert2PointCloud(self):
         points = []
@@ -94,19 +107,7 @@ class Image2PointCloud:
         points = np.argwhere(self.edges[:,:,:,0]>=20)
         colors = cmap(self.images[points[:, 0], points[:, 1], points[:, 2], :]/255)
         transparency = self.edges[points[:, 0], points[:, 1], points[:, 2], 0]/255
-        
-        predPoint = np.argwhere(self.prediction[:,:,:,0]==255)
-        redColor = np.array([1,1,1])
-        redColor = np.expand_dims(redColor, axis=0)
-        predcolors = cmap(np.repeat(redColor, predPoint.shape[0], axis = 0))
-        predtransparency = self.prediction[predPoint[:, 0], predPoint[:, 1], predPoint[:, 2], 0]
-        
-        print("numpy array: ", points.shape)
-        print("numpy colors: ", colors.shape)
-        print("numpy transparency: ", transparency.shape)
-        points = np.append(points,predPoint, axis = 0)
-        colors = np.append(colors,predcolors, axis = 0)
-        transparency = np.append(transparency,predtransparency, axis = 0)
+       
         
         points = np.array(points)
         print("point shape: ", points.shape)
