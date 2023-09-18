@@ -138,7 +138,7 @@ if st.session_state.flag == True:
         st.slider("Select MRI Image Slice", min_value=0, max_value=st.session_state.NumImages, step=1, key = "MRI_Slider",on_change=change_MRI)
         plotter = pv.Plotter(window_size=[600,600])
         plotter.add_points(st.session_state.pointCloud, opacity = st.session_state.pointCloud['transparency'], cmap= 'bone') #, opacity = pointCloud['transparency']
-        plotter.add_points(st.session_state.cystCloud)
+        plotter.add_points(st.session_state.cystCloud, opacity = st.session_state.cystCloud['transparency'])
         plotter.add_scalar_bar()
         plotter.view_isometric()
         plotter.background_color = 'white'
