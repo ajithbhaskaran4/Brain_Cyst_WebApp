@@ -45,9 +45,9 @@ class CNN_Prediction():
     
     def getCystPointCloud(self):
         predPoint = np.argwhere(self.pred[:,:,:,0]==255)
-        redColor = np.array([0,1,0])
-        redColor = np.expand_dims(redColor, axis=0)
-        predcolors = cmap(np.repeat(redColor, predPoint.shape[0], axis = 0))
+        redColor = np.array([0,1,0]) # DIMENSION = (3,)
+        redColor = np.expand_dims(redColor, axis=0) #dIMENSION = (1,3)
+        predcolors = cmap(np.repeat(redColor, predPoint.shape[0], axis = 0)) #DIMENSION = (NUMBER OF POINTS, 3)
         predtransparency = np.zeros(predPoint.shape[0])
         
         self.cycst_cloud = pv.PolyData(predPoint)
@@ -90,6 +90,7 @@ class Image2PointCloud:
                 edge = np.expand_dims(np.asarray(edge), axis=0)
                 edge = np.expand_dims(edge, axis=-1)
                 self.edges = np.append(self.edges, edge, axis = 0)
+                img = img.resize((256,256))
                 img = np.asarray(img)  # Read the image in grayscale
                 img = np.expand_dims(img, axis=0)
                 self.images = np.append(self.images, img, axis = 0)
