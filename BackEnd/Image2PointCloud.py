@@ -85,12 +85,12 @@ class Image2PointCloud:
                 #print("Image: ", filename)
                 img_path = os.path.join(self.directory, filename)
                 img = Image.open(img_path)
+                img = img.resize((256,256))
                 edge = img.convert("L")
                 edge = edge.filter(ImageFilter.FIND_EDGES)
                 edge = np.expand_dims(np.asarray(edge), axis=0)
                 edge = np.expand_dims(edge, axis=-1)
                 self.edges = np.append(self.edges, edge, axis = 0)
-                img = img.resize((256,256))
                 img = np.asarray(img)  # Read the image in grayscale
                 img = np.expand_dims(img, axis=0)
                 self.images = np.append(self.images, img, axis = 0)
