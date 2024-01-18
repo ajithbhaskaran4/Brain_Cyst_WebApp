@@ -12,7 +12,7 @@ import io
 
 pv.set_jupyter_backend('static')
 
-pv.start_xvfb()
+#pv.start_xvfb()
 
 st.set_page_config(layout="wide")
 

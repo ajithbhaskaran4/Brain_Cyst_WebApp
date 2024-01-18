@@ -78,7 +78,7 @@ class Image2PointCloud:
         self.edges = np.empty((0, 256, 256, 1))
         directoryList = os.listdir(self.directory)
         #print("Unsorted : ",directoryList)
-        directoryList = natsort.natsorted(directoryList,reverse=False)
+        directoryList = natsort.natsorted(directoryList)#,reverse=False)
         #print("Sorted: ", directoryList)
         for filename in directoryList:
             if not filename.endswith("_mask.tif"): 
